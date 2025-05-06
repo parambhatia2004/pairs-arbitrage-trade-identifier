@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+src/main/java/com/example/pairs_arbitrage_trade_identifier/service/StockDataService.java
+
 ### STS ###
 .apt_generated
 .classpath

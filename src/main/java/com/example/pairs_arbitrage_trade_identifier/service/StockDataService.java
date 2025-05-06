@@ -10,7 +10,7 @@ import java.io.IOException;
 @Service
 public class StockDataService {
 
-    private static final String API_KEY = "XXXXXXXXX"; // replace this
+    private static final String API_KEY = "e34edaa72b594c8ea49c801d8683bca1"; // replace this
     private static final String BASE_URL = "https://api.twelvedata.com/price";
 
     private final RestTemplate restTemplate = new RestTemplate();
