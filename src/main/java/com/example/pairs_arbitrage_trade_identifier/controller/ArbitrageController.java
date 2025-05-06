@@ -2,13 +2,11 @@ package com.example.pairs_arbitrage_trade_identifier.controller;
 
 import com.example.pairs_arbitrage_trade_identifier.dto.StockPriceResponse;
 import com.example.pairs_arbitrage_trade_identifier.dto.TickerInput;
-import com.example.pairs_arbitrage_trade_identifier.dto.HistoricalPriceData;
 import com.example.pairs_arbitrage_trade_identifier.service.CorrelationService;
 import com.example.pairs_arbitrage_trade_identifier.service.StockDataService;
 import com.example.pairs_arbitrage_trade_identifier.service.SimilarStocksService;
 import com.example.pairs_arbitrage_trade_identifier.service.StockPriceListService;
 import com.example.pairs_arbitrage_trade_identifier.service.CorrelationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -41,7 +39,7 @@ public class ArbitrageController {
     }
 
     @PostMapping("/hourly_data")
-    public ResponseEntity<String> getHourlyData(@RequestBody TickerInput UserInput) throws IOException {
+    public ResponseEntity<String> getHourlyData(@RequestBody TickerInput UserInput){
         StockPriceResponse userStockPriceResponse = stockPriceListService.getHourlyData(UserInput.getUserTicker().toUpperCase());
 
         List<String> similarStocks = similarStocksService.findSimilarStocks(UserInput.getUserTicker());
@@ -50,7 +48,7 @@ public class ArbitrageController {
         return ResponseEntity.ok(response.toString());
     }
     @PostMapping("/minutely_data")
-    public ResponseEntity<String> getMinutelyData(@RequestBody TickerInput UserInput) throws IOException {
+    public ResponseEntity<String> getMinutelyData(@RequestBody TickerInput UserInput){
         StockPriceResponse userStockPriceResponse = stockPriceListService.getMinutelyData(UserInput.getUserTicker().toUpperCase());
 
         List<String> similarStocks = similarStocksService.findSimilarStocks(UserInput.getUserTicker());
