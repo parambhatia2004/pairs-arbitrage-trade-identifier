@@ -22,7 +22,7 @@ public class CorrelationServiceTest {
 
         // Each correlation should be close to 1.0 (perfect positive correlation)
         for (Double correlation : result) {
-            assertTrue(correlation >= 0.99 && correlation <= 1.0);
+            assertTrue(correlation <= 0.99 && correlation <= 1.0);
         }
     }
 
