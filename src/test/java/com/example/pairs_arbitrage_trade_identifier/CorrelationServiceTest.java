@@ -25,4 +25,18 @@ public class CorrelationServiceTest {
             assertTrue(correlation >= 0.99 && correlation <= 1.0);
         }
     }
+
+    @Test
+    void handlesZeroVariance() {
+        List<Double> stockA = List.of(1.0, 1.0, 1.0, 1.0);
+        List<Double> stockB = List.of(2.0, 2.0, 2.0, 2.0);
+        int window = 2;
+
+        List<Double> result = correlationService.computePearsonCorrelationService(stockA, stockB, window);
+
+        // All values should be 0.0 due to zero variance
+        for (Double correlation : result) {
+            assertEquals(0.0, correlation);
+        }
+    }
 }
