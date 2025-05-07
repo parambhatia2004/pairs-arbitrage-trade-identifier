@@ -31,7 +31,7 @@ public class StockPriceListService {
                 .queryParam("symbol", symbol)
                 .queryParam("interval", "1min")
                 .queryParam("apikey", API_KEY)
-                .queryParam("start_date", "2025-01-01")
+                .queryParam("start_date", "2024-01-01")
                 .queryParam("end_date", "2025-01-10")
                 .toUriString();
         System.out.println("______");

@@ -2,11 +2,9 @@ package com.example.pairs_arbitrage_trade_identifier.controller;
 
 import com.example.pairs_arbitrage_trade_identifier.dto.StockPriceResponse;
 import com.example.pairs_arbitrage_trade_identifier.dto.TickerInput;
+import com.example.pairs_arbitrage_trade_identifier.service.*;
 import com.example.pairs_arbitrage_trade_identifier.service.CorrelationService;
-import com.example.pairs_arbitrage_trade_identifier.service.StockDataService;
-import com.example.pairs_arbitrage_trade_identifier.service.SimilarStocksService;
-import com.example.pairs_arbitrage_trade_identifier.service.StockPriceListService;
-import com.example.pairs_arbitrage_trade_identifier.service.CorrelationService;
+import com.example.pairs_arbitrage_trade_identifier.service.PairTradeAnalysisService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -19,9 +17,11 @@ public class ArbitrageController {
     private final SimilarStocksService similarStocksService;
     private final CorrelationService correlationService;
     private final StockPriceListService stockPriceListService;
+    private final PairTradeAnalysisService pairTradeAnalysisService;
 
-    public ArbitrageController(StockDataService stockDataService) {
+    public ArbitrageController(StockDataService stockDataService, PairTradeAnalysisService pairTradeAnalysisService) {
         this.stockDataService = stockDataService;
+        this.pairTradeAnalysisService = pairTradeAnalysisService;
         this.similarStocksService = new SimilarStocksService();
         this.stockPriceListService = new StockPriceListService();
         this.correlationService = new CorrelationService();
@@ -58,21 +58,9 @@ public class ArbitrageController {
     }
 
     @PostMapping("/compute_correlation")
-    public void analyzeSimilarStocks(@RequestBody TickerInput UserInput) {
-        List<String> similarTickers = similarStocksService.findSimilarStocks(UserInput.getUserTicker());
-        List<Double> userStockMinutelyData = stockPriceListService.getMinutelyOpenPrices(UserInput.getUserTicker());
-
-        for (String similarStocks : similarTickers) {
-            List<Double> similarStockMinutelyData = stockPriceListService.getMinutelyOpenPrices(similarStocks);
-//
-//            List<Double> userPrices = new ArrayList<>(userData.getOpenPrices().values());
-//            List<Double> simPrices = new ArrayList<>(similarData.getOpenPrices().values());
-
-            List<Double> correlations = correlationService.computePearsonCorrelationService(userStockMinutelyData, similarStockMinutelyData, 10);
-
-            // Log or analyze correlations
-            System.out.println("Correlations with " + similarStocks + ": " + correlations);
-        }
+    public ResponseEntity<String> analyzePairTrade(@RequestBody TickerInput input) {
+        String analysis = pairTradeAnalysisService.analyseSimilarStocks(input.getUserTicker().toUpperCase());
+        return ResponseEntity.ok(analysis);
     }
 }
 

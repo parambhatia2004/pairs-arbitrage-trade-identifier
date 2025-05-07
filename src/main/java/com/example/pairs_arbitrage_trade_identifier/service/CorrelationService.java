@@ -1,8 +1,11 @@
 package com.example.pairs_arbitrage_trade_identifier.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CorrelationService {
 
     public List<Double> computePearsonCorrelationService(List<Double> userStock, List<Double> compareStock, int window) {
