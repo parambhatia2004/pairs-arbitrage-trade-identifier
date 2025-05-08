@@ -45,11 +45,9 @@ public class PairTradeAnalysisService {
                 continue;
             }
 
-            // 4) Compute spread and rolling Z-scores
             List<Double> spread = computeSpread(userStockData, similarStockData);
             List<Double> zscores = rollingZScore(spread, Z_WINDOW);
 
-            // 5) Detect mean reversion
             boolean mr = hasMeanReversion(zscores, Z_THRESH);
             if (mr) {
                 report.append(similarTicker)
@@ -77,8 +75,7 @@ public class PairTradeAnalysisService {
         }
 
 
-        // Cov(X,Y) = sumXY - sumX*sumY/n
-        // Var(X)   = sumX2 - (sumX^2)/n
+
         double cov = sumXY - (sumX * sumY) / n;
         double var = sumX2 - (sumX * sumX) / n;
         return (var == 0.0) ? 0.0 : cov / var;
