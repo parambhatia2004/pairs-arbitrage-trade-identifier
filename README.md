@@ -6,5 +6,7 @@ Use the mapping /compute_correlation, to find correlated pairs, the other mappin
 
 TODO:
 Automatically identify similar stocks, currently uses hardcoded values.
+
 Refine analysis service, currently uses Pearson correlation.
+
 Optimise parameters to identify potential trades.
